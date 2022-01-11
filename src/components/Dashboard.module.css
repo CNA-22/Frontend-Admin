@@ -1,0 +1,35 @@
+.header {
+  width: 100vw;
+  height: 4rem;
+  background-color: #202020;
+  color: white;
+}
+
+.Signout {
+  float: right;
+  margin-right: 1rem !important;
+}
+
+.menuIco {
+  margin-left: 1rem !important;
+  cursor: pointer;
+}
+
+.Drawer {
+  min-width: 15rem !important;
+  padding: 1vh 0;
+  background-color: #202020;
+  height: 98vh;
+  color: white;
+  text-align: center;
+}
+
+.usersBtn {
+  width: 100% !important;
+  border-radius: 0 !important;
+  margin-top: 1vh;
+}
+
+.center {
+  text-align: center;
+}

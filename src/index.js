@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './components/Login/Login'
+import Dashboard from './components/Dashboard'
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import theme from "./components/createTheme";
+import { ThemeProvider } from '@mui/material/styles';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      < BrowserRouter >
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </ BrowserRouter >
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
