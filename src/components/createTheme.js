@@ -10,8 +10,8 @@ export default createTheme({
     },
     secondary: {
       light: '#202020',
-      main: '#f0ead6',
-      dark: '#fff',
+      main: '#fff',
+      dark: '#aaa',
       contrastText: '#202020'
     },
     error: {
