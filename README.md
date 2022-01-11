@@ -1,5 +1,5 @@
 # CloudNative-FrontendAdmin
 Cloud native course - Repo for Frotnend Admin
 
-## Install with npm i and runt with npm start
+## Install with npm i and run with npm start
 
