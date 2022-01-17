@@ -8,9 +8,9 @@
 .topDiv {
   background-color: #202020;
   width: 150vw;
-  margin: -25vh 0 12vh -25vw;
+  margin: -25vh 0 13vh -25vw;
   text-align:center;
-  height:50vh;
+  height:45vh;
   -webkit-transform: rotate(-22deg);
   -ms-transform: rotate(-22deg);
   transform: rotate(-10deg);
@@ -26,9 +26,9 @@
 .bottomDiv {
   background-color: #202020;
   width: 150vw;
-  margin: 10vh 0 0 -25vw;
+  margin: 19vh 0 0 -25vw;
   text-align:center;
-  height:50vh;
+  height:45vh;
   -webkit-transform: rotate(-22deg);
   -ms-transform: rotate(-22deg);
   transform: rotate(-10deg);
@@ -51,4 +51,5 @@
 
 .loginInput {
   float: right;
+  border-radius: 0px !important;
 }
