@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Style from "./Dashboard.module.css";
 import { useNavigate } from 'react-router-dom';
 import { Grid, Drawer, Typography, Button, Box, Card } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Users from './Cards/Users';
+import Products from './Cards/Producs';
 
 export default function Dashboard() {
-  const [state, setState] = React.useState({left: false});
-  const navigate = useNavigate()
+  const [state, setState] = useState({ left: false });
+  const [window, setWindow] = useState(1);
+  const navigate = useNavigate();
 
   const signOut = () => {
     navigate("/login");
@@ -15,7 +18,7 @@ export default function Dashboard() {
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
-    } 
+    }
     setState({ ...state, [anchor]: open });
   };
 
@@ -27,11 +30,15 @@ export default function Dashboard() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <Typography variant="h6">User Name</Typography>
-      <Button color="secondary" variant="contained" className={Style.usersBtn}>Products</Button>
-      <Button color="secondary" variant="contained" className={Style.usersBtn}>Users</Button>
-      <Button onClick={() => { signOut() }} color="secondary" variant="contained" className={Style.usersBtn}>Signout</Button>
+      <Button onClick={() => { changeDisplay(1) }} color="secondary" variant="contained" className={Style.usersBtn}>Products</Button>
+      <Button onClick={() => { changeDisplay(2) }} color="secondary" variant="contained" className={Style.usersBtn}>Users</Button>
+      <Button onClick={() => { changeDisplay() }} color="secondary" variant="contained" className={Style.usersBtn}>Signout</Button>
     </Box>
   );
+
+  const changeDisplay = (input) => {
+    setWindow(input);
+  }
 
   return (
     <div>
@@ -43,13 +50,14 @@ export default function Dashboard() {
           <Typography variant="h6" className={Style.center}>Dashboard</Typography>
         </Grid>
         <Grid xs={1}>
-          
+
         </Grid>
       </Grid>
-      <Card className={Style.card}>
-          <h1>Hello world</h1>
-          <h2>This is my "auto"biography</h2>
-      </Card>
+      {window === 1 ? (
+        <Products />
+      ) : window === 2 ? (
+        <Users />
+      ) : null}
       <Drawer
         anchor={"left"}
         open={state["left"]}
