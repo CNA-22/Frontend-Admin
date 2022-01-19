@@ -32,7 +32,7 @@ export default function Dashboard() {
       <Typography variant="h6">User Name</Typography>
       <Button onClick={() => { changeDisplay(1) }} color="secondary" variant="contained" className={Style.usersBtn}>Products</Button>
       <Button onClick={() => { changeDisplay(2) }} color="secondary" variant="contained" className={Style.usersBtn}>Users</Button>
-      <Button onClick={() => { changeDisplay() }} color="secondary" variant="contained" className={Style.usersBtn}>Signout</Button>
+      <Button onClick={() => { signOut() }} color="secondary" variant="contained" className={Style.usersBtn}>Signout</Button>
     </Box>
   );
 
