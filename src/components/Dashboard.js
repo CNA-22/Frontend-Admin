@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Style from "./Dashboard.module.css";
 import { useNavigate } from 'react-router-dom';
-import { Grid, Drawer, Typography, Button, Box, Card } from '@mui/material';
+import { Grid, Drawer, Typography, Button, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Users from './Cards/Users';
 import Products from './Cards/Producs';
+import checkJWT from '../utils/helpers'
 
 export default function Dashboard() {
   const [state, setState] = useState({ left: false });
   const [window, setWindow] = useState(1);
   const navigate = useNavigate();
 
+  useEffect(async () => {
+    let jwt = checkJWT();
+    if (!jwt) {
+      signOut();
+    }
+  }, [])
+
   const signOut = () => {
+    document.cookie = 'session' +'=; Path=/;';
     navigate("/login");
   }
 
