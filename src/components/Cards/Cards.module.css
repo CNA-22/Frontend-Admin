@@ -10,4 +10,10 @@
 
 .userCard {
   padding: 2vh 0 !important;
+  cursor: pointer;
+}
+
+.userCard:hover {
+  background-color: #f5f5f3 !important;
+
 }

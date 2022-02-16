@@ -29,7 +29,7 @@ export default function Users() {
       <Typography variant="h5">Users</Typography> <br />
       <Grid container spacing={2} justifyContent={'center'} alignItems={'center'}>
         {userData.length > 0 ? userData.map((e) => {
-          return <DisplayUsers  onClick={()=>{setUsertToDisplay({"email" : e.email, "adress" : e.adress, "zip" : e.zip}); setDisplayOne(true);console.log(userToDispaly) }} email={e.email} />
+          return <DisplayUsers  onClick={()=>{setUsertToDisplay({"email" : e.email, "adress" : e.adress, "zip" : e.zip}); setDisplayOne(true); }} email={e.email} />
         }) : null}
       </Grid>
       </>
