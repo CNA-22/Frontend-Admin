@@ -51,7 +51,13 @@ function DisplayOneProduct(props) {
       .delete(
         `https://cna22-products-service.herokuapp.com/product/${pid}`,
         requestOptions
-      )  }
+      )
+      await axios
+      .delete(
+        `https://cna22-products-service.herokuapp.com/product/${pid}/image`,
+        requestOptions
+      ) 
+    }
   return (
     <>
       <div style={{ height: "250px" }}>
