@@ -5,4 +5,15 @@
   height: 65vh;
   margin: 13vh 10vw;
   text-align: center;
+  overflow-y: auto;
+}
+
+.userCard {
+  padding: 2vh 0 !important;
+  cursor: pointer;
+}
+
+.userCard:hover {
+  background-color: #f5f5f3 !important;
+
 }
