@@ -24,7 +24,7 @@ export default function Users() {
 
   return (
     <Card className={Style.card}>
-      { displayOne ? <DisplayOne email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} ></DisplayOne>: 
+      { displayOne ? <DisplayOne goBack={()=>{setDisplayOne(false)}} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} ></DisplayOne>: 
       <>
       <Typography variant="h5">Users</Typography> <br />
       <Grid container spacing={2} justifyContent={'center'} alignItems={'center'}>

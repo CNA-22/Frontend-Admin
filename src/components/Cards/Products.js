@@ -32,7 +32,7 @@ export default function Products() {
   }, [products])
   return (
     <Card className={Style.card} style={{height: '750px'}}>
-      {displayOne ? <DisplayOneProduct name={productToDisplay.name} description={productToDisplay.description} manufacturer={productToDisplay.manufacturer} picUrl={productToDisplay.imageURLs[0]} price={productToDisplay.price} chip={productToDisplay.chip} memory={productToDisplay.memory}  rating={productToDisplay.rating} packageDimensionsWidth={productToDisplay.packageDimensions.width} packageDimensionsHeight={productToDisplay.packageDimensions.height} packageDimensionsDepth={productToDisplay.packageDimensions.depth}/> :
+      {displayOne ? <DisplayOneProduct goBack={()=>{setDisplayOne(false)}} name={productToDisplay.name} description={productToDisplay.description} manufacturer={productToDisplay.manufacturer} picUrl={productToDisplay.imageURLs[0]} price={productToDisplay.price} chip={productToDisplay.chip} memory={productToDisplay.memory}  rating={productToDisplay.rating} packageDimensionsWidth={productToDisplay.packageDimensions.width} packageDimensionsHeight={productToDisplay.packageDimensions.height} packageDimensionsDepth={productToDisplay.packageDimensions.depth}/> :
         <>
           <Typography variant="h5">Products</Typography> <br />
           <Grid container spacing={2} justifyContent={'center'} alignItems={'center'}>
