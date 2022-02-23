@@ -1,6 +1,5 @@
 export default function checkJWT () {
   let jwt = document.cookie
-  console.log(jwt.split('=')[1]);
   if(jwt.split('=')[1] === ''){
     return false
   }
