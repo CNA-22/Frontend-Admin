@@ -2,13 +2,14 @@ import React, { useRef } from "react";
 import { Card, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import axios from 'axios';
-import checkJWT from "../../../utils/helpers"; 
+import checkJWT from "../../../utils/helpers";
 
 
 
 function DisplayOneProduct(props) {
   const {
     goBack,
+    prevImage,
     name,
     pid,
     description,
@@ -22,7 +23,6 @@ function DisplayOneProduct(props) {
     packageDimensionsHeight,
     packageDimensionsDepth,
   } = props;
-  console.log(props);
 
   const nameRef = useRef();
   const descriptionRef = useRef();
@@ -37,33 +37,34 @@ function DisplayOneProduct(props) {
   const packageDimensionsDepthRef = useRef();
 
   async function deleteProduct() {
-    console.log(pid);
+    // console.log(pid);
 
-    let jwt = checkJWT();
+    // let jwt = checkJWT();
 
-    const requestOptions = {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    };
+    // const requestOptions = {
+    //   headers: {
+    //     Authorization: `Bearer ${jwt}`,
+    //   },
+    // };
 
-    await axios
-      .delete(
-        `https://cna22-products-service.herokuapp.com/product/${pid}`,
-        requestOptions
-      )
-      await axios
-      .delete(
-        `https://cna22-products-service.herokuapp.com/product/${pid}/image`,
-        requestOptions
-      ) 
-    }
+    // await axios
+    //   .delete(
+    //     `https://cna22-products-service.herokuapp.com/product/${pid}`,
+    //     requestOptions
+    //   )
+    //   await axios
+    //   .delete(
+    //     `https://cna22-products-service.herokuapp.com/product/${pid}/image`,
+    //     requestOptions
+    //   ) 
+    console.log(picUrl);
+  }
   return (
     <>
       <div style={{ height: "250px" }}>
         {picUrl ? (
           <>
-            <img src={picUrl} width="250" height="250" />
+            <img src={prevImage} width="250" height="250" />
             <br />
           </>
         ) : (
@@ -117,14 +118,18 @@ function DisplayOneProduct(props) {
           value={rating}
         />
         <br />
-        <label>picUrl: </label>
-        <TextField
-          inputRef={picUrlRef}
-          size="small"
-          type="text"
-          value={picUrl}
-        />
-        <br />
+        {picUrl.map((e) => {
+          return <>
+            <label>picUrl: </label>
+            <TextField
+              size="small"
+              type="text"
+              value={e}
+            />
+            <br />
+          </>
+        })
+        }
         <label>packageDimensionsWidth: </label>
         <TextField
           inputRef={packageDimensionsWidthRef}
