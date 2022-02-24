@@ -1,7 +1,9 @@
 export default function checkJWT () {
   let jwt = document.cookie
-  if(jwt.split('=')[1] === ''){
+  if(jwt?.split('=')[1] === '' || !jwt){
     return false
+  } else {
+
   }
   var data = jwt.split('.')[1];
   var jsonPayload = decodeURIComponent(atob(data).split('').map(function (c) {

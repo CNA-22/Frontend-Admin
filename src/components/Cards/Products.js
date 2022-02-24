@@ -58,7 +58,8 @@ export default function Products() {
                     "packageDimensionswidth": e.packageDimensions.width,
                     "packageDimensionsheight": e.packageDimensions.height,
                     "packageDimensionsdepth": e.packageDimensions.depth,
-                    "pid": e.pid
+                    "pid": e.pid,
+                    "weight": e.packageWeight
                   });
                   setPage(1);
                 }}
@@ -90,6 +91,7 @@ export default function Products() {
       packageDimensionsHeight={productToDisplay.packageDimensionsheight}
       packageDimensionsDepth={productToDisplay.packageDimensionsdepth}
       pid={productToDisplay.pid}
+      weight={productToDisplay.weight}
     />,
     2: <AddProduct goBack={() => { setPage(0) }} />
   }

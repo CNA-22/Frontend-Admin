@@ -2,10 +2,10 @@
   padding: 2vh 2vw;
   border-radius: 0;
   width: 80vw;
-  height: 65vh;
-  margin: 13vh 10vw;
+  height: 80vh;
+  margin: 4vh 10vw 0 10vw;
   text-align: center;
-  overflow-y: auto;
+  overflow-y: auto !important;
 }
 
 .userCard {

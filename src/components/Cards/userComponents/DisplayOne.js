@@ -6,9 +6,9 @@ import axios from 'axios';
 function DisplayOne(props) {
   const { id, adress, email, zip, goBack } = props
 
-  const emailRef = useRef(email);
-  const adressRef = useRef(adress);
-  const zipRef = useRef(zip);
+  const emailRef = useRef();
+  const adressRef = useRef();
+  const zipRef = useRef();
   const pwdRef = useRef();
 
   useEffect(async () => {
@@ -24,18 +24,23 @@ function DisplayOne(props) {
       headers: {
         Authorization: `Bearer ${jwt}`
       },
-
+      body: {
+        email: emailRef.current.value,
+        password: pwdRef.current.value,
+        adress: adressRef.current.value,
+        zip: zipRef.current.value
+      }
     };
-    const body = {
-      email: emailRef.current.value,
-      password: pwdRef.current.value,
-      adress: adressRef.current.value,
-      zip: zipRef.current.value
-    }
+    // const body = {
+    //   email: emailRef.current.value,
+    //   password: pwdRef.current.value,
+    //   adress: adressRef.current.value,
+    //   zip: zipRef.current.value
+    // }
 
-    console.log(jwt);
-    const patch = await axios.patch(`https://cna22-user-service.herokuapp.com/users/data/${id}`, body, { headers: { Authorization: `Bearer ${jwt}` } });
-    console.log(patch);
+    // console.log(jwt);
+    const patch = await axios.patch(`https://cna22-user-service.herokuapp.com/users/data/${id}`, requestOptions);
+    // console.log(patch);
     // goBack()
   }
 
