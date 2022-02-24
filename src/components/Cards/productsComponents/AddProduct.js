@@ -1,12 +1,16 @@
-import React, { useRef } from 'react';
-import { Card, TextField, Button } from "@mui/material";
+import React, { useRef, useState } from 'react';
+import { Card, TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
 export default function AddProduct(props) {
 
+
+
   const { goBack } = props
 
+  const [open, setOpen] = useState(false)
+  const [snackBarMsg, setSnackBarMsg] = useState('')
 
   const nameRef = useRef();
   const descriptionRef = useRef();
@@ -21,6 +25,15 @@ export default function AddProduct(props) {
   const packageDimensionsDepthRef = useRef();
   const weightRef = useRef();
 
+
+  const showSnackBar = (msg) => {
+    setSnackBarMsg(msg)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const addProduct = async () => {
     const jwt = checkJWT()
@@ -42,14 +55,15 @@ export default function AddProduct(props) {
     }
 
 
+
     await axios
       .post(
         `https://cna22-products-service.herokuapp.com/product/`,
         body, { headers: { "Authorization": `Bearer ${jwt}` } }
-      ).then(res => {
-        res.status === 201 && goBack()
-      })
-
+      ).then(
+        (res) => goBack(),
+        (err) => showSnackBar("Product was not added! " + err)
+      )
   }
 
   return (
@@ -140,6 +154,15 @@ export default function AddProduct(props) {
           Add
         </Button>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        severety="error"
+      >
+        <Alert severity="error">{snackBarMsg}</Alert>
+      </Snackbar>
     </>
   );
 }

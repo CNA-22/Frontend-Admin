@@ -13,7 +13,7 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [productToDisplay, setProductToDisplay] = useState({});
 
-  useEffect(async () => {
+  const fetchProducts = async () => {
     let jwt = checkJWT();
 
     const requestOptions = {
@@ -29,6 +29,10 @@ export default function Products() {
         )
         .then((res) => res?.data.items)
     );
+  }
+
+  useEffect(async () => {
+    fetchProducts();
   }, []);
 
   const pages = {
@@ -76,6 +80,7 @@ export default function Products() {
     </>,
     1: <DisplayOneProduct
       goBack={() => {
+        fetchProducts();
         setPage(0);
       }}
       prevImage={productToDisplay.prevImage}

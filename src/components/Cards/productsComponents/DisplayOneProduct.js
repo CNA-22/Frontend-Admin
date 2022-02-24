@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Card, TextField, Button } from "@mui/material";
-import { useNavigate } from "react-router";
+import { TextField, Button } from "@mui/material";
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
@@ -76,26 +75,6 @@ function DisplayOneProduct(props) {
 
   const changeProduct = async () => {
     let jwt = checkJWT();
-
-
-    // const headers = { Authorization: `Bearer ${jwt}` }
-    const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MjAzN2Y5ZTAwY2RiODc5ZjA0MzRiZDgiLCJlbWFpbCI6ImZyb250ZW5kQWRtaW5AY25hMjIuY29tIiwidXNlckxldmVsIjoiYWRtaW4iLCJpYXQiOjE2NDU3MjY5NjIsImV4cCI6MTY1MDkxMDk2Mn0.Y_0bZcK1WNxZULbEWWevKVrxs4KOeTi7WMkOune_yhk` }
-    // const body = {
-    //   "name": nameRef.current.value,
-    //   "description": descriptionRef.current.value,
-    //   "manufacturer": manufacturerRef.current.value,
-    //   "price": priceRef.current.value,
-    //   "chip": chipRef.current.value,
-    //   "memory": memoryRef.current.value,
-    //   "rating": ratingRef.current.value,
-    //   "imageURLs": [""],
-    //   "packageDimensions": {
-    //     "width": packageDimensionsWidthRef.current.value,
-    //     "height": packageDimensionsHeightRef.current.value,
-    //     "depth": packageDimensionsDepthRef.current.value
-    //   },
-    //   "packageWeight": weightRef.current.value,
-    // }
 
     const body = {
       "name": nameRef.current.value,
