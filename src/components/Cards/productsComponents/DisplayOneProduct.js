@@ -69,8 +69,10 @@ function DisplayOneProduct(props) {
       .delete(
         `https://cna22-products-service.herokuapp.com/product/${pid}/image`,
         requestOptions
+      ).then(
+        (res) => goBack(),
+        (err) => goBack()
       )
-    console.log(picUrl);
   }
 
   const changeProduct = async () => {
@@ -91,12 +93,14 @@ function DisplayOneProduct(props) {
 			},
 			"packageWeight": Number(weightRef.current.value)
     }
-    console.log(body)
     await axios
       .put(
         `https://cna22-products-service.herokuapp.com/product/${pid}`,
         body, { headers: {"Authorization" : `Bearer ${jwt}`} }
-      ).then(res => console.log(res))
+      ).then(
+        (res) => goBack(),
+        (err) => console.log(err)
+      )
 
   };
 

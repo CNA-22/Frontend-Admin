@@ -24,7 +24,7 @@ export default function Products() {
     setProducts(
       await axios
         .get(
-          `https://cna22-products-service.herokuapp.com/products`,
+          `https://cna22-products-service.herokuapp.com/products/?size=200`,
           requestOptions
         )
         .then((res) => res?.data.items)
@@ -32,8 +32,10 @@ export default function Products() {
   }
 
   useEffect(async () => {
-    fetchProducts();
-  }, []);
+    if(page == 0){
+      fetchProducts();
+    }
+  }, [page]);
 
   const pages = {
     0: <>
@@ -80,7 +82,6 @@ export default function Products() {
     </>,
     1: <DisplayOneProduct
       goBack={() => {
-        fetchProducts();
         setPage(0);
       }}
       prevImage={productToDisplay.prevImage}

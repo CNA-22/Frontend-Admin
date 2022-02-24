@@ -6,16 +6,17 @@ import axios from 'axios';
 function DisplayOne(props) {
   const { id, adress, email, zip, goBack } = props
 
-  const emailRef = useRef();
-  const adressRef = useRef();
-  const zipRef = useRef();
+  const emailRef = useRef(email);
+  const adressRef = useRef(adress);
+  const zipRef = useRef(zip);
   const pwdRef = useRef();
 
   useEffect(async () => {
     emailRef.current.value = email;
     adressRef.current.value = adress;
     zipRef.current.value = zip;
-  });
+    console.log(email);
+  }, []);
 
   const saveUser = async () => {
     console.log(id);
