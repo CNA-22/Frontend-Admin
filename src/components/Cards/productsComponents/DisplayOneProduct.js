@@ -21,7 +21,7 @@ function DisplayOneProduct(props) {
     packageDimensionsWidth,
     packageDimensionsHeight,
     packageDimensionsDepth,
-    weight
+    weight,
   } = props;
 
   const nameRef = useRef(name);
@@ -80,23 +80,23 @@ function DisplayOneProduct(props) {
 
     const body = {
       "name": nameRef.current.value,
-			"description": descriptionRef.current.value,
-			"manufacturer": manufacturerRef.current.value,
-			"price": Number(priceRef.current.value),
-			"chip": chipRef.current.value,
-			"memory": Number(memoryRef.current.value),
-			"rating": Number(ratingRef.current.value),
-			"packageDimensions": {
-				"width": Number(packageDimensionsWidthRef.current.value),
-				"height": Number(packageDimensionsHeightRef.current.value),
-				"depth": Number(packageDimensionsDepthRef.current.value)
-			},
-			"packageWeight": Number(weightRef.current.value)
+      "description": descriptionRef.current.value,
+      "manufacturer": manufacturerRef.current.value,
+      "price": Number(priceRef.current.value),
+      "chip": chipRef.current.value,
+      "memory": Number(memoryRef.current.value),
+      "rating": Number(ratingRef.current.value),
+      "packageDimensions": {
+        "width": Number(packageDimensionsWidthRef.current.value),
+        "height": Number(packageDimensionsHeightRef.current.value),
+        "depth": Number(packageDimensionsDepthRef.current.value)
+      },
+      "packageWeight": Number(weightRef.current.value)
     }
     await axios
       .put(
         `https://cna22-products-service.herokuapp.com/product/${pid}`,
-        body, { headers: {"Authorization" : `Bearer ${jwt}`} }
+        body, { headers: { "Authorization": `Bearer ${jwt}` } }
       ).then(
         (res) => goBack(),
         (err) => console.log(err)
@@ -117,6 +117,14 @@ function DisplayOneProduct(props) {
             <p>No image found</p> <br />
           </>
         )}
+        <label>Product ID: </label>
+        <TextField
+          size="small"
+          type="text"
+          value={pid}
+          disabled
+        />
+        <br />
         <label>Name: </label>
         <TextField
           inputRef={nameRef}
