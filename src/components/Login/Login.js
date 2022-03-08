@@ -21,6 +21,10 @@ export default function Login() {
 
   const signIn = async () => {
 
+    if(!emailRef.current.value || !passwordRef.current.value){
+      showSnackBar('Please provide email and password')
+      return
+    }
     const body = {
       "email": emailRef.current.value,
       "password": passwordRef.current.value
@@ -35,6 +39,7 @@ export default function Login() {
     const req = await fetch('https://cna22-user-service.herokuapp.com/users/login', requestOptions)
       .then(res => res.json())
       .then(data => data)
+
     if (req.message == 'Login success!') {
       var data = req.accessToken.split('.')[1];
       var jsonPayload = decodeURIComponent(atob(data).split('').map(function (c) {
@@ -43,6 +48,7 @@ export default function Login() {
 
       const tokenUserLevel = JSON.parse(jsonPayload).userLevel
       const exp = JSON.parse(jsonPayload).exp
+
       if (tokenUserLevel === "admin") {
         document.cookie = `user-session=${req.accessToken};max-age=${exp}`;
         navigate("/");
@@ -50,7 +56,7 @@ export default function Login() {
         showSnackBar("Not an admin")
       }
     } else {
-      showSnackBar(req.message)
+      showSnackBar('Wrong username or password')
     }
   }
 
