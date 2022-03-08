@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { Card, TextField, Button } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 
 export default function AddUser(props) {
-  const { goBack } = props;
+  const { goBack, showSnackBar } = props;
 
   const emailRef = useRef();
   const adressRef = useRef();
@@ -12,13 +12,21 @@ export default function AddUser(props) {
 
   const saveUser = async () => {
     const body = {
-      email: emailRef.current.value,
-      password: pwdRef.current.value,
-      adress: adressRef.current.value,
-      zip: zipRef.current.value
+      "email": emailRef.current.value,
+      "password": pwdRef.current.value,
+      "adress": adressRef.current.value,
+      "zip": zipRef.current.value
     }
-    const post = await axios.post(`https://cna22-user-service.herokuapp.com/users/register/`, body);
-    goBack()
+    if (emailRef.current.value == "" || pwdRef.current.value == "" || adressRef.current.value == "" || zipRef.current.value == "") {
+      showSnackBar("Please fill out all the fields! ");
+    } else {
+      await axios.post(`https://cna22-user-service.herokuapp.com/users/register/`, body).then(
+        () => {
+          showSnackBar('User created!')
+          goBack()
+        }
+      );
+    }
   }
 
   return (
