@@ -1,14 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Card, TextField, Button, Snackbar, Alert } from "@mui/material";
+import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
 export default function AddProduct(props) {
 
-
-
   const { goBack } = props
-
   const [open, setOpen] = useState(false)
   const [snackBarMsg, setSnackBarMsg] = useState('')
 
@@ -19,12 +16,10 @@ export default function AddProduct(props) {
   const chipRef = useRef();
   const memoryRef = useRef();
   const ratingRef = useRef();
-  const picUrlRef = useRef()
   const packageDimensionsWidthRef = useRef();
   const packageDimensionsHeightRef = useRef();
   const packageDimensionsDepthRef = useRef();
   const weightRef = useRef();
-
 
   const showSnackBar = (msg) => {
     setSnackBarMsg(msg)
@@ -54,8 +49,6 @@ export default function AddProduct(props) {
       "packageWeight": Number(weightRef.current.value)
     }
 
-
-
     await axios
       .post(
         `https://cna22-products-service.herokuapp.com/product/`,
@@ -74,15 +67,13 @@ export default function AddProduct(props) {
           inputRef={nameRef}
           size="small"
           type="text"
-
-        />{" "}
+        />
         <br />
         <label>Description: </label>
         <TextField
           inputRef={descriptionRef}
           size="small"
           type="text"
-
         />
         <br />
         <label>Manufacturer: </label>
@@ -90,53 +81,47 @@ export default function AddProduct(props) {
           inputRef={manufacturerRef}
           size="small"
           type="text"
-
         />
         <br />
-        <label>price: </label>
+        <label>Price: </label>
         <TextField inputRef={priceRef} size="small" type="number" />
         <br />
-        <label>chip: </label>
+        <label>Chip: </label>
         <TextField inputRef={chipRef} size="small" type="text" />
         <br />
-        <label>memory: </label>
+        <label>Memory: </label>
         <TextField
           inputRef={memoryRef}
           size="small"
           type="number"
-
         />
         <br />
-        <label>rating: </label>
+        <label>Rating: </label>
         <TextField
           inputRef={ratingRef}
           size="small"
           type="number"
-
         />
         <br />
-        <label>packageDimensionsWidth: </label>
+        <label>PackageDimensionsWidth: </label>
         <TextField
           inputRef={packageDimensionsWidthRef}
           size="small"
           type="number"
-
         />
         <br />
-        <label>packageDimensionsHeight: </label>
+        <label>PackageDimensionsHeight: </label>
         <TextField
           inputRef={packageDimensionsHeightRef}
           size="small"
           type="number"
-
         />
         <br />
-        <label>packageDimensionsDepth: </label>
+        <label>PackageDimensionsDepth: </label>
         <TextField
           inputRef={packageDimensionsDepthRef}
           size="small"
           type="number"
-
         />
         <br />
         <label>Package weight: </label>
@@ -144,7 +129,6 @@ export default function AddProduct(props) {
           inputRef={weightRef}
           size="small"
           type="number"
-
         />
         <br />
         <Button onClick={goBack} color="primary" variant="outlined">
