@@ -5,6 +5,7 @@ import checkJWT from "../../../utils/helpers";
 
 function DisplayOneProduct(props) {
   const {
+    showSnackBar,
     goBack,
     prevImage,
     name,
@@ -67,8 +68,14 @@ function DisplayOneProduct(props) {
         `https://cna22-products-service.herokuapp.com/product/${pid}/image`,
         requestOptions
       ).then(
-        (res) => goBack(),
-        (err) => goBack()
+        (res) => {
+          showSnackBar('Product deleted', "success" )
+          goBack()
+        },
+        (err) => {
+          showSnackBar('Product deleted', "success" )
+          goBack()
+        }
       )
   }
 
@@ -95,8 +102,11 @@ function DisplayOneProduct(props) {
         `https://cna22-products-service.herokuapp.com/product/${pid}`,
         body, { headers: { "Authorization": `Bearer ${jwt}` } }
       ).then(
-        (res) => goBack(),
-        (err) => console.log(err)
+        (res) => {
+          showSnackBar('Product was edited', "success" )
+          goBack()
+        },
+        (err) => showSnackBar(err, "error")
       )
 
   };

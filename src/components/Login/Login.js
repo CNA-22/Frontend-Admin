@@ -52,8 +52,6 @@ export default function Login() {
     } else {
       showSnackBar(req.message)
     }
-
-
   }
 
   return (

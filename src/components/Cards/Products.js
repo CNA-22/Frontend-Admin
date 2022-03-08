@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Cards.module.css";
 import checkJWT from "../../utils/helpers";
-import { Grid, Drawer, Typography, Button, Box, Card } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Grid, Typography, Button, Snackbar, Alert, Card } from "@mui/material";
 import axios from "axios";
 import DisplayProducts from "./productsComponents/DisplayProducts";
 import DisplayOneProduct from "./productsComponents/DisplayOneProduct";
@@ -13,6 +12,19 @@ export default function Products() {
   const [page, setPage] = useState(0);
   const [products, setProducts] = useState([]);
   const [productToDisplay, setProductToDisplay] = useState({});
+  const [open, setOpen] = useState(false);
+  const [snackBarMsg, setSnackBarMsg] = useState('');
+  const [severity, setSeverity] = useState('');
+
+  const showSnackBar = (msg, severity) => {
+    setSnackBarMsg(msg)
+    setSeverity(severity)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const fetchProducts = async () => {
     let jwt = checkJWT();
@@ -87,6 +99,7 @@ export default function Products() {
       goBack={() => {
         setPage(0);
       }}
+      showSnackBar={(msg, severity) => { showSnackBar(msg, severity) }}
       prevImage={productToDisplay.prevImage}
       name={productToDisplay.name}
       description={productToDisplay.description}
@@ -101,15 +114,22 @@ export default function Products() {
       packageDimensionsDepth={productToDisplay.packageDimensionsdepth}
       pid={productToDisplay.pid}
       weight={productToDisplay.weight}
-      pid={productToDisplay.pid}
     />,
-    2: <AddProduct goBack={() => { setPage(0) }} />,
-    3: <AddImage goBack={() => { setPage(0) }} />
+    2: <AddProduct showSnackBar={(msg, severity) => { showSnackBar(msg, severity) }} goBack={() => { setPage(0) }} />,
+    3: <AddImage showSnackBar={(msg, severity) => { showSnackBar(msg, severity) }} goBack={() => { setPage(0) }} />
   }
 
   return (
     <Card className={Style.card}>
       {pages[page]}
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={severity}>{snackBarMsg}</Alert>
+      </Snackbar>
     </Card>
   );
 }

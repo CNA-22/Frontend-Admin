@@ -18,11 +18,11 @@ export default function AddUser(props) {
       "zip": zipRef.current.value
     }
     if (emailRef.current.value == "" || pwdRef.current.value == "" || adressRef.current.value == "" || zipRef.current.value == "") {
-      showSnackBar("Please fill out all the fields! ");
+      showSnackBar("Please fill out all the fields! ", "error");
     } else {
       await axios.post(`https://cna22-user-service.herokuapp.com/users/register/`, body).then(
         () => {
-          showSnackBar('User created!')
+          showSnackBar('User created!', "success")
           goBack()
         }
       );

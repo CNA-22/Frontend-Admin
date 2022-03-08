@@ -1,14 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { TextField, Button, Snackbar, Alert } from "@mui/material";
+import React, { useRef } from 'react';
+import { TextField, Button, } from "@mui/material";
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
 export default function AddProduct(props) {
-
-  const { goBack } = props
-  const [open, setOpen] = useState(false)
-  const [snackBarMsg, setSnackBarMsg] = useState('')
-
+  const { goBack, showSnackBar } = props
   const nameRef = useRef();
   const descriptionRef = useRef();
   const manufacturerRef = useRef();
@@ -20,15 +16,6 @@ export default function AddProduct(props) {
   const packageDimensionsHeightRef = useRef();
   const packageDimensionsDepthRef = useRef();
   const weightRef = useRef();
-
-  const showSnackBar = (msg) => {
-    setSnackBarMsg(msg)
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const addProduct = async () => {
     const jwt = checkJWT()
@@ -54,8 +41,11 @@ export default function AddProduct(props) {
         `https://cna22-products-service.herokuapp.com/product/`,
         body, { headers: { "Authorization": `Bearer ${jwt}` } }
       ).then(
-        (res) => goBack(),
-        (err) => showSnackBar("Product was not added! " + err)
+        (res) => {
+          showSnackBar('Added ' + res.data.name, "success")
+          goBack()
+        },
+        (err) => showSnackBar("Product was not added! " + err, "error")
       )
   }
 
@@ -138,15 +128,6 @@ export default function AddProduct(props) {
           Add
         </Button>
       </div>
-      <Snackbar
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        severety="error"
-      >
-        <Alert severity="error">{snackBarMsg}</Alert>
-      </Snackbar>
     </>
   );
 }

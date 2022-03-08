@@ -1,21 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { TextField, Button, Snackbar, Alert } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
-export default function AddImage({ goBack }) {
-
-    const [open, setOpen] = useState(false)
-    const [snackBarMsg, setSnackBarMsg] = useState('')
-
-    const showSnackBar = (msg) => {
-        setSnackBarMsg(msg)
-        setOpen(true)
-    }
-
-    const handleClose = () => {
-        setOpen(false)
-    }
+export default function AddImage({ goBack, showSnackBar }) {
 
     let jwt = checkJWT();
     const productId = useRef('')
@@ -31,12 +19,13 @@ export default function AddImage({ goBack }) {
         try {
             const post = await axios.post(`https://cna22-products-service.herokuapp.com/product/${productId.current.value}/image`, formdata, { headers: { "Authorization": `Bearer ${jwt}`, 'Content-Type': 'multipart/form-data', } });
             if (post.status === 200) {
+                showSnackBar('Added Picture', "success")
                 goBack()
             } else {
-                showSnackBar(`Image was not added! Error code: ${post.status}`)
+                showSnackBar(`Image was not added! Error code: ${post.status}`, "error")
             }
         } catch (err) {
-            showSnackBar(`Image was not added! Error code: ${err}`)
+            showSnackBar(`Image was not added! Error code: ${err}`, "error")
         }
 
     }
@@ -52,15 +41,6 @@ export default function AddImage({ goBack }) {
             />
             <Button onClick={goBack} color="error" variant="outlined">Go Back</Button>
             <Button onClick={saveImage} color="success" variant="outlined">Save</Button>
-            <Snackbar
-                open={open}
-                autoHideDuration={2000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                severety="error"
-            >
-                <Alert severity="error">{snackBarMsg}</Alert>
-            </Snackbar>
         </>
     );
 }

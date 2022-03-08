@@ -12,15 +12,17 @@ export default function Users(props) {
   const [userData, setUserData] = useState([]);
   const [displayPage, setDisplayPage] = useState(1);
   const [userToDispaly, setUsertToDisplay] = useState({});
-  const [open, setOpen] = useState(false)
-  const [snackBarMsg, setSnackBarMsg] = useState('')
+  const [open, setOpen] = useState(false);
+  const [snackBarMsg, setSnackBarMsg] = useState('');
+  const [severity, setSeverity] = useState('');
 
   const handleClose = () => {
     setOpen(false)
   }
 
-  const showSnackBar = (msg) => {
+  const showSnackBar = (msg, severity) => {
     setSnackBarMsg(msg)
+    setSeverity(severity)
     setOpen(true)
   }
 
@@ -48,7 +50,7 @@ export default function Users(props) {
   }, [displayPage]);
 
   const jsFiles = {
-    0: <DisplayOne showSnackBar={(msg) => { showSnackBar(msg) }} signOut={() => { signOut() }} goBack={() => { setDisplayPage(1) }} id={userToDispaly.id} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} />,
+    0: <DisplayOne showSnackBar={(msg, severity) => { showSnackBar(msg, severity) }} signOut={() => { signOut() }} goBack={() => { setDisplayPage(1) }} id={userToDispaly.id} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} />,
     1: <>
       <div className={Style.surrDiv}>
         <Typography variant="h5">Users</Typography> <br />
@@ -60,7 +62,7 @@ export default function Users(props) {
       </div>
       <Button onClick={() => { setDisplayPage(2) }} color="primary" variant="outlined" className={Style.addBtn}>Add</Button>
     </>,
-    2: <AddUser showSnackBar={(msg) => { showSnackBar(msg) }} goBack={() => { setDisplayPage(1) }} />
+    2: <AddUser showSnackBar={(msg, severity) => { showSnackBar(msg, severity) }} goBack={() => { setDisplayPage(1) }} />
   };
 
   return (
@@ -71,9 +73,8 @@ export default function Users(props) {
         autoHideDuration={2000}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        severety="error"
       >
-        <Alert severity="error">{snackBarMsg}</Alert>
+        <Alert severity={severity}>{snackBarMsg}</Alert>
       </Snackbar>
     </Card>
   );
