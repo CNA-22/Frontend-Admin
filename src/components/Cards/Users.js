@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Cards.module.css";
-import { Grid, Drawer, Typography, Button, Box, Card } from '@mui/material';
+import { Grid, Typography, Button, Card, Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
 import checkJWT from '../../utils/helpers';
 import DisplayUsers from "./userComponents/DisplayUsers";
@@ -12,11 +12,22 @@ export default function Users(props) {
   const [userData, setUserData] = useState([]);
   const [displayPage, setDisplayPage] = useState(1);
   const [userToDispaly, setUsertToDisplay] = useState({});
+  const [open, setOpen] = useState(false)
+  const [snackBarMsg, setSnackBarMsg] = useState('')
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const showSnackBar = (msg) => {
+    setSnackBarMsg(msg)
+    setOpen(true)
+  }
 
   useEffect(async () => {
     if (displayPage == 1) {
       const jwt = checkJWT();
-      if(!jwt) {
+      if (!jwt) {
         signOut()
       }
       const requestOptions = {
@@ -24,30 +35,46 @@ export default function Users(props) {
           Authorization: `Bearer ${jwt}`
         }
       };
-      const req = await axios.get(`https://cna22-user-service.herokuapp.com/users/data`, requestOptions).then((res) => res?.data);
-      setUserData(req)
+      await axios.get(`https://cna22-user-service.herokuapp.com/users/data`, requestOptions).then(
+        (res) => {
+          if (res.data[0]?._id) {
+            setUserData(res.data)
+          } else {
+            showSnackBar(res.data.message)
+          }
+        },
+      );
     }
   }, [displayPage]);
 
   const jsFiles = {
-    0: <DisplayOne signOut={() => { signOut() }} goBack={() => { setDisplayPage(1) }} id={userToDispaly.id} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} />,
+    0: <DisplayOne showSnackBar={(msg) => { showSnackBar(msg) }} signOut={() => { signOut() }} goBack={() => { setDisplayPage(1) }} id={userToDispaly.id} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} />,
     1: <>
       <div className={Style.surrDiv}>
         <Typography variant="h5">Users</Typography> <br />
         <Grid container spacing={2} justifyContent={'center'} alignItems={'center'}>
           {userData.length > 0 ? userData.map((e) => {
-            return <DisplayUsers onClick={() => { setUsertToDisplay({ "id": e._id, "email": e.email, "adress": e.adress, "zip": e.zip }); setDisplayPage(0);  }} email={e.email} />
+            return <DisplayUsers onClick={() => { setUsertToDisplay({ "id": e._id, "email": e.email, "adress": e.adress, "zip": e.zip }); setDisplayPage(0); }} email={e.email} />
           }) : null}
         </Grid>
       </div>
       <Button onClick={() => { setDisplayPage(2) }} color="primary" variant="outlined" className={Style.addBtn}>Add</Button>
     </>,
-    2: <AddUser goBack={() => { setDisplayPage(1) }} />
+    2: <AddUser showSnackBar={(msg) => { showSnackBar(msg) }} goBack={() => { setDisplayPage(1) }} />
   };
 
   return (
     <Card className={Style.card}>
       {jsFiles[displayPage]}
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        severety="error"
+      >
+        <Alert severity="error">{snackBarMsg}</Alert>
+      </Snackbar>
     </Card>
   );
 };

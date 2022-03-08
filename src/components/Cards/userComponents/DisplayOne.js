@@ -1,21 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { TextField, Button, Snackbar, Alert } from '@mui/material';
+import React, { useRef, useEffect } from 'react';
+import { TextField, Button } from '@mui/material';
 import checkJWT from '../../../utils/helpers';
 import axios from 'axios';
 
 function DisplayOne(props) {
-  const { id, adress, email, zip, goBack, signOut } = props
-  const [open, setOpen] = useState(false)
-  const [snackBarMsg, setSnackBarMsg] = useState('')
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const showSnackBar = (msg) => {
-    setSnackBarMsg(msg)
-    setOpen(true)
-  }
+  const { id, adress, email, zip, goBack, signOut, showSnackBar } = props
 
   const emailRef = useRef(email);
   const adressRef = useRef(adress);
@@ -46,6 +35,7 @@ function DisplayOne(props) {
         body, { headers: { "Authorization": `Bearer ${jwt}` } }).then(
           (res) => {
             if (res.data.message == "User successfully updated") {
+              showSnackBar(res.data.message)
               goBack()
             } else {
               showSnackBar(res.data.message)
@@ -67,6 +57,7 @@ function DisplayOne(props) {
       ).then(
         (res) => {
           if (res.data.message == "User deleted successfully") {
+            showSnackBar(res.data.message)
             goBack()
           } else {
             showSnackBar(res.data.message)
@@ -84,15 +75,6 @@ function DisplayOne(props) {
       <Button onClick={goBack} color="primary" variant="outlined">Go Back</Button>
       <Button onClick={deleteProduct} color="error" variant="outlined">Delete</Button>
       <Button onClick={saveUser} color="success" variant="outlined">Save</Button>
-      <Snackbar
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        severety="error"
-      >
-        <Alert severity="error">{snackBarMsg}</Alert>
-      </Snackbar>
     </>
   );
 }
