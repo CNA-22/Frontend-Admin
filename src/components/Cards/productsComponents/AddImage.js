@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { Card, TextField, Button, Input, Snackbar, Alert } from '@mui/material';
+import { TextField, Button, Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
 export default function AddImage({ goBack }) {
-
 
     const [open, setOpen] = useState(false)
     const [snackBarMsg, setSnackBarMsg] = useState('')
@@ -22,7 +21,6 @@ export default function AddImage({ goBack }) {
     const productId = useRef('')
     const [image, setImage] = useState()
 
-
     const handleImageChange = (e) => {
         setImage(e.target.files[0])
     };
@@ -32,7 +30,6 @@ export default function AddImage({ goBack }) {
         formdata.append("image", image)
         try {
             const post = await axios.post(`https://cna22-products-service.herokuapp.com/product/${productId.current.value}/image`, formdata, { headers: { "Authorization": `Bearer ${jwt}`, 'Content-Type': 'multipart/form-data', } });
-            console.log("status: " + post.status)
             if (post.status === 200) {
                 goBack()
             } else {

@@ -3,8 +3,6 @@ import { TextField, Button } from "@mui/material";
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
 
-
-
 function DisplayOneProduct(props) {
   const {
     goBack,
@@ -31,7 +29,6 @@ function DisplayOneProduct(props) {
   const chipRef = useRef(chip);
   const memoryRef = useRef(memory);
   const ratingRef = useRef(rating);
-  const picUrlRef = useRef();
   const packageDimensionsWidthRef = useRef(packageDimensionsWidth);
   const packageDimensionsHeightRef = useRef(packageDimensionsHeight);
   const packageDimensionsDepthRef = useRef(packageDimensionsDepth);
@@ -149,13 +146,13 @@ function DisplayOneProduct(props) {
           value={manufacturerRef.current.value}
         />
         <br />
-        <label>price: </label>
+        <label>Price: </label>
         <TextField inputRef={priceRef} size="small" type="number" value={priceRef.current.value} />
         <br />
-        <label>chip: </label>
+        <label>Chip: </label>
         <TextField inputRef={chipRef} size="small" type="text" value={chipRef.current.value} />
         <br />
-        <label>memory: </label>
+        <label>Memory: </label>
         <TextField
           inputRef={memoryRef}
           size="small"
@@ -163,7 +160,7 @@ function DisplayOneProduct(props) {
           value={memoryRef.current.value}
         />
         <br />
-        <label>rating: </label>
+        <label>Rating: </label>
         <TextField
           inputRef={ratingRef}
           size="small"
@@ -171,15 +168,7 @@ function DisplayOneProduct(props) {
           value={ratingRef.current.value}
         />
         <br />
-        <label>picUrl: </label>
-        <TextField
-          multiline
-          size="small"
-          type="text"
-          value={picUrl.join(", ")}
-        />
-        <br />
-        <label>packageDimensionsWidth: </label>
+        <label>PackageDimensionsWidth: </label>
         <TextField
           inputRef={packageDimensionsWidthRef}
           size="small"
@@ -187,7 +176,7 @@ function DisplayOneProduct(props) {
           value={packageDimensionsWidthRef.current.value}
         />
         <br />
-        <label>packageDimensionsHeight: </label>
+        <label>PackageDimensionsHeight: </label>
         <TextField
           inputRef={packageDimensionsHeightRef}
           size="small"
@@ -195,7 +184,7 @@ function DisplayOneProduct(props) {
           value={packageDimensionsHeightRef.current.value}
         />
         <br />
-        <label>packageDimensionsDepth: </label>
+        <label>PackageDimensionsDepth: </label>
         <TextField
           inputRef={packageDimensionsDepthRef}
           size="small"
