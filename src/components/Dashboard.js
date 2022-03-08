@@ -13,7 +13,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(async () => {
-    let jwt = checkJWT();
+    const jwt = checkJWT();
     if (!jwt) {
       signOut();
     }
@@ -65,7 +65,7 @@ export default function Dashboard() {
       {window === 1 ? (
         <Products />
       ) : window === 2 ? (
-        <Users />
+        <Users signOut={() => { signOut() }}/>
       ) : null}
       <Drawer
         anchor={"left"}

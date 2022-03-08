@@ -7,14 +7,18 @@ import DisplayUsers from "./userComponents/DisplayUsers";
 import DisplayOne from "./userComponents/DisplayOne";
 import AddUser from "./userComponents/AddUser";
 
-export default function Users() {
+export default function Users(props) {
+  const { signOut } = props
   const [userData, setUserData] = useState([]);
   const [displayPage, setDisplayPage] = useState(1);
   const [userToDispaly, setUsertToDisplay] = useState({});
 
   useEffect(async () => {
     if (displayPage == 1) {
-      let jwt = checkJWT();
+      const jwt = checkJWT();
+      if(!jwt) {
+        signOut()
+      }
       const requestOptions = {
         headers: {
           Authorization: `Bearer ${jwt}`
@@ -26,7 +30,7 @@ export default function Users() {
   }, [displayPage]);
 
   const jsFiles = {
-    0: <DisplayOne goBack={() => { setDisplayPage(1) }} id={userToDispaly.id} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} />,
+    0: <DisplayOne signOut={() => { signOut() }} goBack={() => { setDisplayPage(1) }} id={userToDispaly.id} email={userToDispaly.email} zip={userToDispaly.zip} adress={userToDispaly.adress} />,
     1: <>
       <div className={Style.surrDiv}>
         <Typography variant="h5">Users</Typography> <br />
