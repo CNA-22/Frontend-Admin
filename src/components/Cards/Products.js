@@ -7,6 +7,7 @@ import axios from "axios";
 import DisplayProducts from "./productsComponents/DisplayProducts";
 import DisplayOneProduct from "./productsComponents/DisplayOneProduct";
 import AddProduct from "./productsComponents/AddProduct";
+import AddImage from "./productsComponents/AddImage";
 
 export default function Products() {
   const [page, setPage] = useState(0);
@@ -32,7 +33,7 @@ export default function Products() {
   }
 
   useEffect(async () => {
-    if(page == 0){
+    if (page == 0) {
       fetchProducts();
     }
   }, [page]);
@@ -52,6 +53,7 @@ export default function Products() {
               return <DisplayProducts
                 onClick={() => {
                   setProductToDisplay({
+                    "pid": e.pid,
                     "prevImage": e.imageURLs[0],
                     "name": e.name,
                     "description": e.description,
@@ -76,7 +78,8 @@ export default function Products() {
             })}
           </Grid>
         </div>
-          <Button onClick={() => { setPage(2) }} color="primary" variant="outlined" className={Style.addBtn}>Add</Button>
+          <Button onClick={() => { setPage(2) }} color="primary" variant="outlined" className={Style.addBtn}>Add Product</Button>
+          <Button onClick={() => { setPage(3) }} color="primary" variant="outlined" className={Style.addBtn}>Add Image</Button>
         </>
         : null}
     </>,
@@ -98,8 +101,10 @@ export default function Products() {
       packageDimensionsDepth={productToDisplay.packageDimensionsdepth}
       pid={productToDisplay.pid}
       weight={productToDisplay.weight}
+      pid={productToDisplay.pid}
     />,
-    2: <AddProduct goBack={() => { setPage(0) }} />
+    2: <AddProduct goBack={() => { setPage(0) }} />,
+    3: <AddImage goBack={() => { setPage(0) }} />
   }
 
   return (
