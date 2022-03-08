@@ -20,7 +20,7 @@ export default function Dashboard() {
   }, [])
 
   const signOut = () => {
-    document.cookie = 'session' +'=; Path=/;';
+    document.cookie = 'user-session' +'=; Path=/;';
     navigate("/login");
   }
 

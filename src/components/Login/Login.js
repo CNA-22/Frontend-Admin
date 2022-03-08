@@ -36,7 +36,7 @@ export default function Login() {
     const tokenUserLevel = JSON.parse(jsonPayload).userLevel
     const exp = JSON.parse(jsonPayload).exp
     if (tokenUserLevel === "admin") {
-      document.cookie = `session=${req.accessToken};max-age=${exp}`;
+      document.cookie = `user-session=${req.accessToken};max-age=${exp}`;
       navigate("/");
     }
 
