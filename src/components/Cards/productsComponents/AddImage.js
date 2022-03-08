@@ -24,8 +24,10 @@ export default function AddImage({ goBack }) {
         }
         // console.log(body)
         const post = await axios.post(`https://cna22-products-service.herokuapp.com/product/${productId.current.value}/image`, formdata, { headers: { "Authorization": `Bearer ${jwt}`, 'Content-Type': 'multipart/form-data', } });
-        console.log(post)
-        // goBack()
+        console.log(post.status)
+        if (post.status === 200) {
+            goBack()
+        }
     }
 
     return (
