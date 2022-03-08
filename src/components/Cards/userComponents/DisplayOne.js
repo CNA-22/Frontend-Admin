@@ -29,16 +29,16 @@ function DisplayOne(props) {
       "zip": zipRef.current.value
     }
     if (emailRef.current.value == "" || pwdRef.current.value == "" || adressRef.current.value == "" || zipRef.current.value == "") {
-      showSnackBar("Please fill out all the fields! ");
+      showSnackBar("Please fill out all the fields! ", "error");
     } else {
       await axios.patch(`https://cna22-user-service.herokuapp.com/users/data/${id}`,
         body, { headers: { "Authorization": `Bearer ${jwt}` } }).then(
           (res) => {
             if (res.data.message == "User successfully updated") {
-              showSnackBar(res.data.message)
+              showSnackBar(res.data.message, "success")
               goBack()
             } else {
-              showSnackBar(res.data.message)
+              showSnackBar(res.data.message, "error")
             }
           }
         )
@@ -57,10 +57,10 @@ function DisplayOne(props) {
       ).then(
         (res) => {
           if (res.data.message == "User deleted successfully") {
-            showSnackBar(res.data.message)
+            showSnackBar(res.data.message, "success")
             goBack()
           } else {
-            showSnackBar(res.data.message)
+            showSnackBar(res.data.message, "error")
           }
         }
       )
