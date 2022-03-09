@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from 'axios';
 import checkJWT from "../../../utils/helpers";
@@ -34,6 +34,7 @@ function DisplayOneProduct(props) {
   const packageDimensionsHeightRef = useRef(packageDimensionsHeight);
   const packageDimensionsDepthRef = useRef(packageDimensionsDepth);
   const weightRef = useRef(weight);
+  const [inventory, setInventory] = useState({antal : null, exists : false});
 
   useEffect(async () => {
     nameRef.current.value = name;
@@ -47,7 +48,27 @@ function DisplayOneProduct(props) {
     packageDimensionsHeightRef.current.value = packageDimensionsHeight;
     packageDimensionsDepthRef.current.value = packageDimensionsDepth;
     weightRef.current.value = weight;
+
   });
+
+  useEffect(async () => {
+
+    let jwt = checkJWT();
+
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+
+    await axios
+      .get(
+        `https://cna-inventory-service.herokuapp.com/products/${pid}`,
+        requestOptions
+      )
+      .then((res) => { res.data.antal ? setInventory({antal : res.data.antal, exists : true}) : setInventory({antal : null, exists : false}) })
+    console.log(inventory.antal);
+  }, [pid])
 
   const deleteProduct = async () => {
     let jwt = checkJWT();
@@ -69,14 +90,64 @@ function DisplayOneProduct(props) {
         requestOptions
       ).then(
         (res) => {
-          showSnackBar('Product deleted', "success" )
+          showSnackBar('Product deleted', "success")
           goBack()
         },
         (err) => {
-          showSnackBar('Product deleted', "success" )
+          showSnackBar('Product deleted', "success")
           goBack()
         }
       )
+  }
+  const updateInventoryVariable = (ev) => {
+    setInventory({ antal : ev, exists : inventory.exists});
+  }
+
+  const changeInventory = async () => {
+    if(!inventory.antal) {
+      showSnackBar('Please fill out field', "error");
+      return
+    }
+    let jwt = checkJWT();
+    const body = {
+      "antal" : inventory.antal
+    }
+
+    await axios
+    .patch(
+      `https://cna-inventory-service.herokuapp.com/products/edit/${pid}`,
+      body, { headers: { "Authorization": `Bearer ${jwt}` } }
+    ).then(
+      (res) => {
+        showSnackBar(res.data, "success");
+      },
+      (err) => showSnackBar(err.data, "error")
+    )
+  }
+
+  const addInventory = async () => {
+    if(!inventory.antal) {
+      showSnackBar('Please fill out field', "error");
+      return
+    }
+
+    let jwt = checkJWT();
+
+    const body = {
+      "pid": pid,
+      "antal": inventory.antal
+    }
+
+    await axios
+    .post(
+      `https://cna-inventory-service.herokuapp.com/products`,
+      body, { headers: { "Authorization": `Bearer ${jwt}` } }
+    ).then(
+      (res) => {
+        showSnackBar(res.data, "success")
+      },
+      (err) => showSnackBar("Product was not added! " + err.data, "error")
+    )
   }
 
   const changeProduct = async () => {
@@ -103,7 +174,7 @@ function DisplayOneProduct(props) {
         body, { headers: { "Authorization": `Bearer ${jwt}` } }
       ).then(
         (res) => {
-          showSnackBar('Product was edited', "success" )
+          showSnackBar('Product was edited', "success")
           goBack()
         },
         (err) => showSnackBar(err, "error")
@@ -219,6 +290,33 @@ function DisplayOneProduct(props) {
         <Button onClick={deleteProduct} color="error" variant="outlined">
           Delete
         </Button>
+        <br /><br />
+        <label>Change inventory: </label>
+        {inventory.exists ? <>
+          <TextField
+            size="small"
+            type="number"
+            value={inventory.antal}
+            onChange={event => {
+              updateInventoryVariable(event.target.value);
+            }}
+          />
+          <Button onClick={changeInventory} color="success" variant="outlined">
+            Change
+          </Button>
+        </> : <>
+          <TextField
+            size="small"
+            type="number"
+            value={inventory.antal}
+            onChange={event => {
+              updateInventoryVariable(event.target.value);
+            }}
+          />
+          <Button onClick={addInventory} color="success" variant="outlined">
+            Change
+          </Button>
+        </>}
       </div>
     </>
   );
